@@ -1,0 +1,8 @@
+name: User Age Filter
+description: 'Filter and export users ordered by age range'
+type: module
+core_version_requirement: '^9.2 || ^10'
+package: 'CustomModules'
+version: '0.0.1'
+dependencies:
+  - drupal:node

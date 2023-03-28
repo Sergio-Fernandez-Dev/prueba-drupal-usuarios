@@ -1,0 +1,34 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function user_age_filter_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+
+  $form['age'] = [
+    '#type' => 'number',
+    '#title' => t('Age'),
+    '#min' => 0,
+    '#max' => 120,
+    '#required' => TRUE,
+  ];
+  
+  $form['nationality'] = [
+    '#type' => 'select',
+    '#title' => t('Nationality'),
+    '#options' => user_age_filter_set_countries(),
+    '#required' => TRUE,
+  ];
+}
+
+function user_age_filter_set_countries() {
+    
+  $countries = [
+    'Afghanistan',
+    'Albania',
+    'Algeria',
+  ];
+  
+  return $countries;
+}
