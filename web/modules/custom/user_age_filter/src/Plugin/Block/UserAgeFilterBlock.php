@@ -17,7 +17,10 @@ class UserAgeFilterBlock extends BlockBase {
         
         return [
             '#type' => 'markup',
-            '#markup' => $this->get_number_of_user_by_age_range(18, 35),
+            '#markup' => 
+              '18-35 years: ' . $this->get_number_of_user_by_age_range(18, 35) . ' || ' .
+              '35-50 years: ' . $this->get_number_of_user_by_age_range(35, 50) . ' || ' .
+              '+50 years: ' . $this->get_number_of_user_by_age_range(50),
         ];
     }
 
@@ -28,14 +31,12 @@ class UserAgeFilterBlock extends BlockBase {
         $number_of_users_in_range = 0;        
 
         foreach ($user_list as $user) {
-          $age = $user->get('field_user_age')->value;
+          $age = $user->get('field_age')->value;
           if ($age >= $min_age && ($age < $max_age || !$max_age)) {
             $number_of_users_in_range++;
           }
-          dpm($user);
         }
         
         return $number_of_users_in_range;
-      }
-
+    }
 }
