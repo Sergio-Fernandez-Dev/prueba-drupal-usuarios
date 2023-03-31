@@ -1,27 +1,6 @@
 <?php
 
-use Drupal\Core\Form\FormStateInterface;
-
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function user_age_filter_form_user_register_form_alter(&$form, &$form_state, $form_id) {
-  
-
-  $form['field_country'] = [
-    '#type' => 'select',
-    '#title' => t('Country'),
-    '#options' => _user_age_filter_set_countries(),
-    '#required' => TRUE,
-  ];
+function user_age_filter_set_countries()
+{
+  return \Drupal::service('country_manager')->getList();
 }
-
-function _user_age_filter_set_countries() {
-    
-  $countries = Drupal::service('country_manager')->getList();
-  
-  return $countries;
-} 
-
-

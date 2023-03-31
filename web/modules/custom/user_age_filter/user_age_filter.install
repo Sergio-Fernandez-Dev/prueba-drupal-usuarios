@@ -1,0 +1,80 @@
+<?php
+
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+/**
+ * Implements hook_install().
+ */
+function user_age_filter_install()
+{
+
+  _user_age_filter_install_field_age();
+  _user_age_filter_install_field_country();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function user_age_filter_uninstall()
+{
+  // Remove the field configuration.
+  \Drupal::configFactory()->getEditable('field.field.user.user.field_age')->delete();
+  \Drupal::configFactory()->getEditable('field.storage.user.field_age')->delete();
+
+  \Drupal::configFactory()->getEditable('field.field.user.user.field_country')->delete();
+  \Drupal::configFactory()->getEditable('field.storage.user.field_country')->delete();
+  // Clear the entity and render caches.
+
+  \Drupal::entityTypeManager()->getStorage('entity_form_display')->resetCache();
+  \Drupal::entityTypeManager()->getStorage('entity_view_display')->resetCache();
+
+}
+
+function _user_age_filter_install_field_age() 
+{
+  $form_display = EntityFormDisplay::load('user.user.default');
+  $view_display = EntityViewDisplay::load('user.user.default');
+
+
+  $form_display->setComponent('field_age', [
+    'weight' => 0,
+    'label' => t('Age'),
+  ]);
+
+  $view_display->setComponent('field_age', [
+    'weight' => 0,
+    'label' => t('Age'),
+  ]);
+
+  $form_display->save();
+  $view_display->save();
+
+  // Clear the entity and render caches.
+  \Drupal::entityTypeManager()->getStorage('entity_form_display')->resetCache();
+  \Drupal::entityTypeManager()->getStorage('entity_view_display')->resetCache();
+}
+
+function _user_age_filter_install_field_country() 
+{
+  $form_display = EntityFormDisplay::load('user.user.default');
+  $view_display = EntityViewDisplay::load('user.user.default');
+
+
+  $form_display->setComponent('field_country', [
+    'weight' => 0,
+    'label' => t('Country'),
+  ]);
+
+  $view_display->setComponent('field_country', [
+    'weight' => 0,
+    'label' => t('Country'),
+  ]);
+
+  $form_display->save();
+  $view_display->save();
+
+  // Clear the entity and render caches.
+  \Drupal::entityTypeManager()->getStorage('entity_form_display')->resetCache();
+  \Drupal::entityTypeManager()->getStorage('entity_view_display')->resetCache();
+}
