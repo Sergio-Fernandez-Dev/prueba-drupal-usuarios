@@ -11,36 +11,32 @@ use Drupal\Core\Block\BlockBase;
  * )
  */
 
-class UserAgeFilterBlock extends BlockBase
-{
+class UserAgeFilterBlock extends BlockBase {
 
-  public function build()
-  {
-
-    return [
-      '#type' => 'markup',
-      '#markup' =>
-      '18-35 years: ' . $this->get_number_of_user_by_age_range(18, 35) . ' || ' .
-      '35-50 years: ' . $this->get_number_of_user_by_age_range(35, 50) . ' || ' .
-      '+50 years: ' . $this->get_number_of_user_by_age_range(50),
-    ];
-  }
-
-  public function get_number_of_user_by_age_range($min_age, $max_age = NULL)
-  {
-
-    $user_list = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple();
-    $number_of_users_in_range = 0;
-
-    foreach ($user_list as $user) {
-      $age = $user->get('field_age')->value;
-
-      if ($age >= $min_age && ($age < $max_age || !$max_age)) {
-        $number_of_users_in_range++;
-      }
+    public function build() {
+        
+        return [
+            '#type' => 'markup',
+            '#markup' => 
+                '<b>18-35 years: </b>' . $this->get_number_of_user_by_age_range(18, 35) . ' || ' .
+                '<b>35-50 years: </b>' . $this->get_number_of_user_by_age_range(36, 50) . ' || ' .
+                '<b>+50 years: </b>' . $this->get_number_of_user_by_age_range(50),
+        ];
     }
 
-    return $number_of_users_in_range;
-  }
-}
+    private function get_number_of_user_by_age_range($min_age, $max_age = NULL) {
+        
+        $user_list = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple();
+        $number_of_users_in_range = 0;        
 
+        foreach ($user_list as $user) {
+            $age = $user->get('field_age')->value;
+
+            if ($age >= $min_age && ($age <= $max_age || !$max_age)) {
+                $number_of_users_in_range++;
+            }
+        }
+        
+        return $number_of_users_in_range;
+    }
+}
